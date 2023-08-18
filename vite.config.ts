@@ -10,6 +10,7 @@ export default defineConfig({
     },
   },
   preview: {
+    host: "localhost",
     port: 80,
   },
 });
