@@ -10,13 +10,14 @@ import { getProducts } from "../api/product";
 export const ProductList = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["products", page, search],
     queryFn: () => getProducts(page, search),
   });
 
   const onChangeSearchCallBack = useCallback(
     debounce((value: string) => {
+      setPage(1);
       setSearch(value);
     }, 300),
     []
@@ -28,8 +29,8 @@ export const ProductList = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen py-8">
-      <div className="p-4 flex justify-center">
+    <div className="flex flex-col min-h-screen py-8 container">
+      <div className="p-4 flex justify-end border-b mb-4">
         <Input
           defaultValue={search}
           onChange={onChangeSearch}
@@ -37,11 +38,15 @@ export const ProductList = () => {
           placeholder="Search"
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
-        {data?.products?.map((v: IProduct) => (
-          <Product key={v.id} product={v} />
-        ))}
+      {isLoading && <div>Loading...</div>}
+      <div className="flex-1">
+        <div className="flex flex-wrap">
+          {data?.products?.map((v: IProduct) => (
+            <Product key={v.id} product={v} />
+          ))}
+        </div>
       </div>
+
       <div className="p-4">
         <Pagination
           totalPage={data?.pages}
