@@ -25,7 +25,10 @@ export function ProductFilter({
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Filter</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent
+        align="end"
+        className="w-56 max-h-[400px] overflow-auto"
+      >
         <DropdownMenuLabel>Category</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem

@@ -23,6 +23,11 @@ export const ProductList = () => {
     queryFn: () => getCategories(),
   });
 
+  const onChangeFilter = (category: string) => {
+    setPage(1);
+    setCategory(category);
+  };
+
   const onChangeSearchCallBack = useCallback(
     debounce((value: string) => {
       setPage(1);
@@ -30,8 +35,6 @@ export const ProductList = () => {
     }, 300),
     []
   );
-
-  console.log("categories", categories);
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     // setSearch(e.target.value);
@@ -53,7 +56,7 @@ export const ProductList = () => {
             <ProductFilter
               categories={categories || []}
               category={category}
-              onChangeCategory={setCategory}
+              onChangeCategory={onChangeFilter}
             />
           </div>
         </div>
